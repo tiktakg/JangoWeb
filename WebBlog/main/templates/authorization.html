@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Форма ввода имени и пароля</title>
+</head>
+<body>
+  <div style="text-align: center;">
+    <h1>Добро пожаловать!</h1>
+    <p>Введите ваше имя:</p>
+    <input type="text" id="nameInput">
+    <br>
+    <p>Введите ваш пароль:</p>
+    <input type="password" id="passwordInput">
+    <br>
+    <button onclick="submitForm()">Отправить</button>
+    <button onclick="submitForm2()">принять</button>
+  </div>
+  <script>
+    function submitForm() {
+      var name = document.getElementById('nameInput').value;
+      var password = document.getElementById('passwordInput').value;
+    //   document.cookie = "name=" + name + ";";
+    //   document.cookie = "password=" + password + ";";
+    }
+    function submitForm2() {
+        username = request.COOKIES["username"]
+    }
+  </script>
+</body>
+</html>
