@@ -1,14 +1,67 @@
 <!DOCTYPE html>
-{% load static %}
 <html>
+
 <head>
-    <title>main</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="{% static "css/styles.css" %}" />
+    <title>Мой сайт</title>
 </head>
-<body>
-    <h2>main</h2>
-    <iframe src="" frameborder="0"></iframe>
-    
-</body>
+<div>
+    <div style="text-align: center;">
+        {% if isAdmin %}
+        <p>Welcome back, admin !</p>
+        {% else %}
+        <p>Welcome back, user !</p>
+        {% endif %}
+    </div>
+
+    <body>
+        <div>
+            <form style="text-align: right;">
+                <input type="text" id="tagInput" placeholder="Поиск">
+                <button onclick="findWithTag()">Отправить</button>
+            </form>
+        </div>
+
+        <div style=" overflow: auto; height: 600px; scrollbar-width: thin;">
+            <p>
+            <H1>Все посты</H1>
+            </p>
+            <ul>
+                {% for post in posts %}
+                {% if isAdmin %}
+                <li>
+                    <p><a href="AdminPost/{{ post }}">{{post}}</a></p>
+                </li>
+                {% else %}
+                <li>
+                    <p><a href="post/{{ post }}">{{post}}</a></p>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+
+        </div>
+
+
+    </body>
+
 </html>
+
+
+
+<script>
+
+    function getUrl(str) {
+        var url = "post/?" + "post=" + encodeURIComponent(str)
+        return url;
+    }
+
+    function findWithTag() {
+        var tag = document.getElementById('tagInput').value;
+        var url = "main/" + "tag=" + encodeURIComponent(tag);
+        window.location.href = url;
+    }
+
+    function enterNotice() {
+
+    }
+</script>

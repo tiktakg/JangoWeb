@@ -17,10 +17,12 @@
     <button onclick="submitForm()">Отправить</button>
   </div>
   <script>
-    function submitForm() {
+
+    function submitForm() 
+    {
       var name = document.getElementById('nameInput').value;
       var password = document.getElementById('passwordInput').value;
-      var url = "main|name=" + encodeURIComponent(name) + "&password=" + encodeURIComponent(password);
+      var url = "main/?"+"name="+ encodeURIComponent(name) + "&password=" + encodeURIComponent(password);
       window.location.href = url;
     }
 
