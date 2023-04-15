@@ -63,7 +63,7 @@ def takeTextOfPost(namePost):
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
 
-def takeTegOfPost(namePost):
+def takeTegOfPost(name):
     try:
         conn = mysql.connector.connect(user='root', password='root',
                                         host='localhost',

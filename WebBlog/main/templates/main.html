@@ -38,7 +38,7 @@
                     {% if tag == post%}
                         {% if isAdmin %}
                         <li>
-                            <p><a   onclick="goToPost('{{post}}')" href="AdminPost/{{ post }}">{{post}}</a></p>
+                            <p><a   onclick="goToPost('{{post}}')" href="AdminPost/{{ post }}/?">{{post}}</a></p>
                             <img src="https://via.placeholder.com/50x50" alt="Картинка">
                         </li>
                         {% else %}
@@ -108,10 +108,8 @@
     {
         
         document.cookie ="postName="+ postName;
-      
-       
+        console.log("postName="+ postName)
+        
     }
 
-
 </script>
-

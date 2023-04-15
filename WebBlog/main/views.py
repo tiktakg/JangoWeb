@@ -14,7 +14,7 @@ def main(request):
     return render(request, "main.html",context=context)
 
 def post(request):
-    name = request.GET.get("post")
+    # name = request.GET.get("post")
     context = {'post': "firstNotes",'text':takeTextOfPost('firstNotes'),'tegs':takeTegOfPost('firstNotes')}
     return render(request, "post.html",context=context)
 
@@ -23,7 +23,7 @@ def AdminPost(request):
     check = request.GET.get("delete")
     if(check == "true"):
         deltePost(name)
-        
+
     context = {'post': "firstNotes",'text':takeTextOfPost('firstNotes'),'tegs':takeTegOfPost('firstNotes')}
     return render(request, "AdminPost.html",context=context)
  
