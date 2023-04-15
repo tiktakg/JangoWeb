@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Пост</title>
     <style>
@@ -33,12 +34,11 @@
             position: fixed;
             right: 1rem;
             bottom: 1rem;
-            background-color: #f44336;
-            color: white;
             padding: 0.1rem 1rem;
             font-size: 1rem;
         }
-        .enterFile{
+
+        .enterFile {
             position: fixed;
             right: 15rem;
             bottom: 1rem;
@@ -62,11 +62,34 @@
             <img src="https://via.placeholder.com/300x200" alt="Картинка">
         </div>
         <div class="short-tag">
-            <p>Короткий тег</p>
+            <p>#{{tegs}}</p>
         </div>
-        <button class="btn-edit">Редактировать</button>
-        <button class="btn-delete">Удалить</button>
-        <input class="enterFile" type="file">
+
+        <button  onclick="editNote()" class="btn-edit">Редактировать</button>
+        <button  onclick="deleteNotee()" class="btn-delete">Удалить</button>
+        
+
+        
     </div>
 </body>
+
 </html>
+
+
+<script>
+    function deleteNotee()
+    {
+        let post = "{{post}}"
+        var url= "http://127.0.0.1:8000/main/"+ "AdminPost/" + "?name="+  encodeURIComponent(post)+ "&delete=" +  encodeURIComponent(true)
+        window.location.href = url;
+    }
+
+    function editNote()
+    {
+        var url = 'http://127.0.0.1:8000/main/makePost'
+        window.location.href = url;
+    }
+
+</script>
+
+<!-- encodeURIComponent(str(true)) -->

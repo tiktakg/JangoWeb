@@ -43,8 +43,6 @@ def takeAllPost():
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
 
-
-
 def takeTextOfPost(namePost):
     try:
         conn = mysql.connector.connect(user='root', password='root',
@@ -65,9 +63,47 @@ def takeTextOfPost(namePost):
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
 
-takeTextOfPost("firstPost")
+def takeTegOfPost(namePost):
+    try:
+        conn = mysql.connector.connect(user='root', password='root',
+                                        host='localhost',
+                                        port=3308, # change to the port number used by MAMP
+                                        database='test')
+        cursor = conn.cursor()
+       
+        cursor.execute("SELECT name,tegs FROM `blog`")
+        
+        name= ' '.join(map(str, name))
+
+        for ch in ['(',')','\'',',']:
+            name = name.replace(ch,'')
+        
+        name = name.split()
+        print(name)
+
+ 
+
+    except mysql.connector.Error as e:
+        print("Error connecting to MySQL: ", e)
 
 
+def deltePost(namePost):
+    try:
+        conn = mysql.connector.connect(user='root', password='root',
+                                        host='localhost',
+                                        port=3308, # change to the port number used by MAMP
+                                        database='test')
+        cursor = conn.cursor()
+       
+        cursor.execute("DELETE FROM `blog` WHERE `primaryKey` = "+ str(namePost))
+        conn.commit()
+    
+    except mysql.connector.Error as e:
+        print("Error connecting to MySQL: ", e)
+
+
+
+# `
 
 
     

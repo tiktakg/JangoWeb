@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML Form</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <form>
+        <label for="title">Заголовок (25 символов):</label><br>
+        <input type="text" id="title\" name="title"value = {{post}} maxlength="25\"><br><br>
+        
+        <label for="text">Текст:</label><br>
+        <textarea id="text" name="text" rows="5"   cols="50">{{text}}</textarea><br><br>
+        
+        <label for="tag">Тег:</label><br>
+        <input type="text" id="tag" name="tag"  value = {{tegs}} placeholder="тег через ',' " > <br><br>
+        
+        <label  for="image">Картинка:</label><br>
+        <input class="enterFile" type="file" accept=".jpg,.png" >
+        
+        <button onclick="saveData()">Отправить</button>
+</body>
+</html>
+
+<script>
+    function saveData()
+    {
+        var title = document.getElementsByName('title')[0].value;
+        var text = document.getElementsByName('text')[0].value;
+        var tag = document.getElementsByName('tag')[0].value;
+
+        document.cookie = "title="+title;
+        document.cookie = "text="+text;
+        document.cookie = "tag="+tag;
+
+    }
+</script>

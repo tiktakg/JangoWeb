@@ -7,41 +7,74 @@
 <div>
     <div style="text-align: center;">
         {% if isAdmin %}
-        <p>Welcome back, admin !</p>
+        <h2>Welcome back, admin !</h2>
+        
         {% else %}
-        <p>Welcome back, user !</p>
+        <h2>Welcome back, user !</h2>
         {% endif %}
     </div>
 
     <body>
-        <div>
-            <form style="text-align: right;">
-                <input type="text" id="tagInput" placeholder="Поиск">
-                <button onclick="findWithTag()">Отправить</button>
-            </form>
+        <div style="text-align: right;">
+
+            {% if isAdmin %}
+            <input type="text" id="tagInput" placeholder="Поиск">
+            <button onclick="findWithTag(true)">искать</button>
+            {% else %}
+            <input type="text" id="tagInput" placeholder="Поиск">
+            <button onclick="findWithTag()">искать</button>
+
+            {% endif %}
+
+
         </div>
 
         <div style=" overflow: auto; height: 600px; scrollbar-width: thin;">
             <p>
-            <H1>Все посты</H1>
+            <H3>Все посты</H3>
             </p>
             <ul>
                 {% for post in posts %}
-                {% if isAdmin %}
-                <li>
-                    <p><a href="AdminPost/{{ post }}">{{post}}</a></p>
-                </li>
-                {% else %}
-                <li>
-                    <p><a href="post/{{ post }}">{{post}}</a></p>
-                </li>
-                {% endif %}
+                    {% if tag == post%}
+                        {% if isAdmin %}
+                        <li>
+                            <p><a   onclick="goToPost('{{post}}')" href="AdminPost/{{ post }}">{{post}}</a></p>
+                            <img src="https://via.placeholder.com/50x50" alt="Картинка">
+                        </li>
+                        {% else %}
+                        <li>
+                            <p><a   onclick="goToPost('{{post}}')" href="post/{{ post }}">{{post}}</a></p>
+                            <img src="https://via.placeholder.com/50x50" alt="Картинка">
+                        </li>
+                        {% endif %}
+                    {% elif tag == ""%}
+                        {% if isAdmin %}
+                        <li>
+                            <p><a   onclick="goToPost('{{post}}')" href="AdminPost/{{ post }}">{{post}}</a></p>
+                            <img src="https://via.placeholder.com/50x50" alt="Картинка">
+                        </li>
+                        {% else %}
+                        <li>
+                            <p><a   onclick="goToPost('{{post}}')" href="post/{{ post }}">{{post}}</a></p>
+                            <img src="https://via.placeholder.com/50x50" alt="Картинка">
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                
                 {% endfor %}
             </ul>
 
         </div>
 
+        {% if isAdmin %}
+        <div>
+            <p>
+                <button onclick="editNote()">добавить запись</button>
+            <p><a href="http://127.0.0.1:8000/">выйти</a></p>
+            </p>
 
+        </div>
+        {% endif %}
     </body>
 
 </html>
@@ -54,14 +87,31 @@
         var url = "post/?" + "post=" + encodeURIComponent(str)
         return url;
     }
-
-    function findWithTag() {
+    function findWithTag(check) {
         var tag = document.getElementById('tagInput').value;
-        var url = "main/" + "tag=" + encodeURIComponent(tag);
+        if(check == true)
+            var url =  "?name="+ encodeURIComponent("root") + "&password=" + encodeURIComponent("root") + "&tag=" + encodeURIComponent(tag);
+        else
+            var url =  "tag=" + encodeURIComponent(tag);
+        
+        document.cookie = "login=value";
+        window.location.href = url;
+        
+    }
+
+    function editNote()
+    {
+        var url = 'http://127.0.0.1:8000/main/makePost'
         window.location.href = url;
     }
-
-    function enterNotice() {
-
+    function goToPost(postName)
+    {
+        
+        document.cookie ="postName="+ postName;
+      
+       
     }
+
+
 </script>
+
