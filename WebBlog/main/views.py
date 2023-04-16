@@ -1,6 +1,7 @@
 from django.shortcuts import HttpResponse,render
 from WebBlog.connectToDB import *
 
+import requests
 
 def authorization(request):
     return render(request, "authorization.html")
@@ -10,7 +11,11 @@ def main(request):
     name = request.GET.get("name")
     tag = request.GET.get("tag")
     password = request.GET.get("password")
-    context = {'isAdmin': checkAdmin(name,password),'posts': takeAllPost(),'tag':tag}
+
+    test = takeAllPost()
+    print(test)
+    
+    context = {'isAdmin': checkAdmin(name,password),'posts':  takeAllPost(),'tag':tag,'primaryKey':takeIdOfPost()}
     return render(request, "main.html",context=context)
 
 def post(request):
@@ -19,10 +24,24 @@ def post(request):
     return render(request, "post.html",context=context)
 
 def AdminPost(request):
-    name = request.GET.get("post")
-    check = request.GET.get("delete")
-    if(check == "true"):
+    name = request.GET.get("id")
+    if(id != ""):
         deltePost(name)
+
+    
+    # session = requests.Session()
+    # print(session.cookies.get_dict())
+    # print("||")
+
+
+    # response = requests.get("http://localhost/main")
+    # cookies = response.cookies.get_dict()
+    # for cookie in session.cookies:
+    #     print(cookie)
+
+    
+
+   
 
     context = {'post': "firstNotes",'text':takeTextOfPost('firstNotes'),'tegs':takeTegOfPost('firstNotes')}
     return render(request, "AdminPost.html",context=context)

@@ -79,8 +79,18 @@
 <script>
     function deleteNotee()
     {
-        let post = "{{post}}"
-        var url= "http://127.0.0.1:8000/main/"+ "AdminPost/" + "?name="+  encodeURIComponent(post)+ "&delete=" +  encodeURIComponent(true)
+        // let post = "{{post}}"
+        // var url= "http://127.0.0.1:8000/main/"+ "AdminPost/" + "?name="+  encodeURIComponent(post)+ "&delete=" +  encodeURIComponent(true)
+        // window.location.href = url;
+
+        var value = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('id='))
+        .split('=')[1];
+
+        console.log(value)
+
+        var url = 'http://127.0.0.1:8000/main/AdminPost/?id=' + encodeURIComponent(value)
         window.location.href = url;
     }
 

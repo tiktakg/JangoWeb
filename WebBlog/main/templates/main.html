@@ -8,7 +8,7 @@
     <div style="text-align: center;">
         {% if isAdmin %}
         <h2>Welcome back, admin !</h2>
-        
+
         {% else %}
         <h2>Welcome back, user !</h2>
         {% endif %}
@@ -33,36 +33,38 @@
             <p>
             <H3>Все посты</H3>
             </p>
-            <ul>
-                {% for post in posts %}
-                    {% if tag == post%}
+            <form method="POST">
+                <ul>
+                    {% for post,id in posts.items %}
+                        {% if tag == post%}
+                            {% if isAdmin %}
+                            <li>
+                                <p><a onclick="goToPost('{{id}}')" href="AdminPost/{{ post }}">{{post}}</a></p>
+                                <img src="https://via.placeholder.com/50x50" alt="Картинка">
+                            </li>
+                            {% else %}
+                            <li>
+                                <p><a onclick="goToPost('{{id}}')" href="post/{{ post }}">{{post}}</a></p>
+                                <img src="https://via.placeholder.com/50x50" alt="Картинка">
+                            </li>
+                            {% endif %}
+                        {% elif tag == ""%}
                         {% if isAdmin %}
                         <li>
-                            <p><a   onclick="goToPost('{{post}}')" href="AdminPost/{{ post }}/?">{{post}}</a></p>
+                            <p><a onclick="goToPost('{{id}}')" href="AdminPost/{{ post }}">{{post}}</a></p>
                             <img src="https://via.placeholder.com/50x50" alt="Картинка">
                         </li>
                         {% else %}
                         <li>
-                            <p><a   onclick="goToPost('{{post}}')" href="post/{{ post }}">{{post}}</a></p>
-                            <img src="https://via.placeholder.com/50x50" alt="Картинка">
-                        </li>
-                        {% endif %}
-                    {% elif tag == ""%}
-                        {% if isAdmin %}
-                        <li>
-                            <p><a   onclick="goToPost('{{post}}')" href="AdminPost/{{ post }}">{{post}}</a></p>
-                            <img src="https://via.placeholder.com/50x50" alt="Картинка">
-                        </li>
-                        {% else %}
-                        <li>
-                            <p><a   onclick="goToPost('{{post}}')" href="post/{{ post }}">{{post}}</a></p>
+                            <p><a onclick="goToPost('{{id}}')" href="post/{{ post }}">{{post}}</a></p>
                             <img src="https://via.placeholder.com/50x50" alt="Картинка">
                         </li>
                         {% endif %}
                     {% endif %}
-                
-                {% endfor %}
-            </ul>
+
+                    {% endfor %}
+                </ul>
+            </form>
 
         </div>
 
@@ -75,6 +77,11 @@
 
         </div>
         {% endif %}
+        <ul>
+            {% for key, value in posts.items %}
+            <li>{{ key }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
     </body>
 
 </html>
@@ -89,27 +96,28 @@
     }
     function findWithTag(check) {
         var tag = document.getElementById('tagInput').value;
-        if(check == true)
-            var url =  "?name="+ encodeURIComponent("root") + "&password=" + encodeURIComponent("root") + "&tag=" + encodeURIComponent(tag);
+        if (check == true)
+            var url = "?name=" + encodeURIComponent("root") + "&password=" + encodeURIComponent("root") + "&tag=" + encodeURIComponent(tag);
         else
-            var url =  "tag=" + encodeURIComponent(tag);
-        
-        document.cookie = "login=value";
+            var url = "tag=" + encodeURIComponent(tag);
+
+
         window.location.href = url;
-        
+
     }
 
-    function editNote()
-    {
+    function editNote(postName) {
+
         var url = 'http://127.0.0.1:8000/main/makePost'
         window.location.href = url;
     }
-    function goToPost(postName)
-    {
-        
-        document.cookie ="postName="+ postName;
-        console.log("postName="+ postName)
-        
+    function goToPost(postName) {
+
+        console.log(postName)
+
+        document.cookie = "id=" + postName;
     }
 
 </script>
+
+<!-- ,'{{primaryKey}}' -->
