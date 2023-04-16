@@ -26,20 +26,59 @@ def takeAllPost():
                                         database='test')
         cursor = conn.cursor()
        
-        cursor.execute("SELECT name FROM `blog`")
+        cursor.execute("SELECT name,primaryKey FROM `blog`")
         name = cursor.fetchall()
-
        
-        name= ' '.join(map(str, name))
+        # print("name1")
 
-        for ch in ['(',')','\'',',']:
-            name = name.replace(ch,'')
         
-        name = name.split()
-        print(name)
-        return name
+        
+        newList = {}
+        for name in name:
+
+            newList[name[0]] = name[1]
+            newname =str(name[0]) + ":"+ str(name[1])
+            # print(newname)
+            
+           
+        # print(newList)
+
+        # name= ' '.join(map(str, name))
+
        
 
+        # for ch in ['(',')','\'',',']:
+        #     name = name.replace(ch,'')
+        
+        # name = name.split()
+        
+
+        return newList
+    
+    except mysql.connector.Error as e:
+        print("Error connecting to MySQL: ", e)
+
+def takeIdOfPost():
+    try:
+        conn = mysql.connector.connect(user='root', password='root',
+                                        host='localhost',
+                                        port=3308, # change to the port number used by MAMP
+                                        database='test')
+        cursor = conn.cursor()
+       
+        cursor.execute("SELECT primaryKey FROM `blog`")
+        primaryKey = cursor.fetchall()
+       
+        primaryKey= ' '.join(map(str, primaryKey))
+
+       
+        for ch in ['(',')','\'',',']:
+            primaryKey = primaryKey.replace(ch,'')
+        
+        primaryKey = primaryKey.split()
+        
+        return primaryKey
+    
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
 
@@ -70,17 +109,17 @@ def takeTegOfPost(name):
                                         port=3308, # change to the port number used by MAMP
                                         database='test')
         cursor = conn.cursor()
-       
         cursor.execute("SELECT name,tegs FROM `blog`")
+        name = cursor.fetchall()
         
         name= ' '.join(map(str, name))
 
         for ch in ['(',')','\'',',']:
             name = name.replace(ch,'')
         
+        
         name = name.split()
-        print(name)
-
+    
  
 
     except mysql.connector.Error as e:
@@ -101,10 +140,11 @@ def deltePost(namePost):
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
 
-
+def takeImg(namePost):
+    pass
+takeTegOfPost("firstNotes")
 
 # `
 
 
     
-
