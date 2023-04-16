@@ -181,10 +181,10 @@ def updatePost(namePost,dataPost,tegPost,imgPost,id):
         
 
         cursor = conn.cursor()
-    
-        # textForInset = f"INSERT INTO `blog` (`primaryKey`, `name`, `tegs`, `data`, `img`) VALUES (NULL, '{namePost}', '{tegPost}', '{dataPost}', NULL);"
-        # cursor.execute(textForInset)
-        # conn.commit()
+        textForInset = f"UPDATE `blog` SET `name` = '{namePost}', `tegs` = '{tegPost}', `data` = '{dataPost}' WHERE `blog`.`primaryKey` = {id};"
+
+        cursor.execute(textForInset)
+        conn.commit()
     
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)

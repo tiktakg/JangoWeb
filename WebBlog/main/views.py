@@ -8,26 +8,30 @@ def authorization(request):
  
 def main(request):
     
-    name = request.GET.get("name")
-    tag = request.GET.get("tag")
+    name = request.GET.get("name",'')
+    tag = request.GET.get("tag",'')
     password = request.GET.get("password")
+
+    idFromMake = request.GET.get("id",'')
 
     titleFromMake =  request.POST.get("title",'')
     textFromMake = request.POST.get("text",'')
     tagFromMake = request.POST.get("tag",'')
     imgFromMake = request.POST.get("img",'')
-    idFromMake = request.POST.get("iddd",'')
 
     
-    if(titleFromMake != "" and textFromMake != ""):
+
+    print(idFromMake)
+    if(idFromMake != "" and titleFromMake != "" and textFromMake != ""):
+        updatePost(titleFromMake,textFromMake,tagFromMake,imgFromMake,idFromMake)
+    elif(titleFromMake != "" and textFromMake != ""):
         addPost(titleFromMake,textFromMake,tagFromMake,imgFromMake)
-    # else:
-    #     print("eror")
-    #     return render(request, "eror.html")
+   
+    
+   
     
     allpost ={}
     if(tag == ""):
-        print("Tag empty")
         allpost =  takeAllPost()
     else:
         allpost = takeTegOfPosts(tag)
@@ -51,8 +55,12 @@ def AdminPost(request):
  
 def makePost(request):
     name = request.GET.get("name")
+    id = request.GET.get("id")
+    
+   
+    
     if(name!=""):
-        context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name)}
+        context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'id':id}
     else:
          context = {'post': "",'text': "",'tegs': ""}
    

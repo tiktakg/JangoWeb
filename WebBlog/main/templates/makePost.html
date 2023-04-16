@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <form method="post" action="http://127.0.0.1:8000/main/?name=root&password=root&tag=">
+    <form method="post" action="http://127.0.0.1:8000/main/?name=root&password=root&tag=&id={{id}}">
         {% csrf_token %}
         {% if post != ""%}
         <label for="title">Заголовок (25 символов):</label><br>
@@ -29,31 +29,16 @@
         <textarea id="text" name="text" rows="5" cols="50"></textarea><br><br>
 
         <label for="tag">Тег:</label><br>
-        <input type="text" id="tag" name="tag" value="" placeholder="тег через ',' "> <br><br>
+        <input type="text" id="tag" name="tag" value="" placeholder=" тег через ',' "> <br><br>
 
         <label for="image">Картинка:</label><br>
         <input class="enterFile" name="img" type="file" accept=".jpg,.png">
         {% endif %}
 
-        <button onclick="saveData()">Отправить</button>
+        <button >Отправить</button>
 
 
 
 </body>
 
 </html>
-
-<script>
-    function saveData() {
-        var value = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('id='))
-            .split('=')[1];
-
-       
-
-
-
-
-    }
-</script>
