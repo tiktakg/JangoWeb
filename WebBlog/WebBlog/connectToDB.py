@@ -29,28 +29,15 @@ def takeAllPost():
         cursor.execute("SELECT name,primaryKey FROM `blog`")
         name = cursor.fetchall()
        
-        # print("name1")
+       
 
         
         
         newList = {}
         for name in name:
-
             newList[name[0]] = name[1]
             newname =str(name[0]) + ":"+ str(name[1])
-            # print(newname)
-            
-           
-        # print(newList)
-
-        # name= ' '.join(map(str, name))
-
-       
-
-        # for ch in ['(',')','\'',',']:
-        #     name = name.replace(ch,'')
-        
-        # name = name.split()
+ 
         
 
         return newList
@@ -102,7 +89,7 @@ def takeTextOfPost(namePost):
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
 
-def takeTegOfPost(name):
+def takeTegToPost(teg):
     try:
         conn = mysql.connector.connect(user='root', password='root',
                                         host='localhost',
@@ -112,19 +99,43 @@ def takeTegOfPost(name):
         cursor.execute("SELECT name,tegs FROM `blog`")
         name = cursor.fetchall()
         
-        name= ' '.join(map(str, name))
+        my_dict = dict(name)
 
-        for ch in ['(',')','\'',',']:
-            name = name.replace(ch,'')
-        
-        
-        name = name.split()
+        return my_dict.get(teg)
     
- 
 
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
 
+def takeTegOfPosts(teg):
+    try:
+        conn = mysql.connector.connect(user='root', password='root',
+                                        host='localhost',
+                                        port=3308, # change to the port number used by MAMP
+                                        database='test')
+        cursor = conn.cursor()
+        cursor.execute("SELECT name,primaryKey,tegs FROM `blog`")
+        name = cursor.fetchall()
+        
+        
+      
+
+        newList = {}
+        for name in name:
+            allTegs = name[2].split(',')
+            for tegs in allTegs:
+                if(tegs.lower() == teg.lower() ):
+                    newList[name[0]] = name[1]
+                    print(str(name[0]) +"|"+ str(name[1])+"|" + str(name[2]))
+            
+
+        
+           
+        return newList
+    
+
+    except mysql.connector.Error as e:
+        print("Error connecting to MySQL: ", e)
 
 def deltePost(namePost):
     try:
@@ -140,9 +151,68 @@ def deltePost(namePost):
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
 
+
+
+def addPost(namePost,dataPost,tegPost,imgPost):
+    try:
+        conn = mysql.connector.connect(user='root', password='root',
+                                        host='localhost',
+                                        port=3308, # change to the port number used by MAMP
+                                        database='test')
+        
+
+        cursor = conn.cursor()
+    
+        textForInset = f"INSERT INTO `blog` (`primaryKey`, `name`, `tegs`, `data`, `img`) VALUES (NULL, '{namePost}', '{tegPost}', '{dataPost}', NULL);"
+        cursor.execute(textForInset)
+       
+       
+        conn.commit()
+    
+    except mysql.connector.Error as e:
+        print("Error connecting to MySQL: ", e)
+
+def updatePost(namePost,dataPost,tegPost,imgPost,id):
+    try:
+        conn = mysql.connector.connect(user='root', password='root',
+                                        host='localhost',
+                                        port=3308, # change to the port number used by MAMP
+                                        database='test')
+        
+
+        cursor = conn.cursor()
+    
+        # textForInset = f"INSERT INTO `blog` (`primaryKey`, `name`, `tegs`, `data`, `img`) VALUES (NULL, '{namePost}', '{tegPost}', '{dataPost}', NULL);"
+        # cursor.execute(textForInset)
+        # conn.commit()
+    
+    except mysql.connector.Error as e:
+        print("Error connecting to MySQL: ", e)
+
+
+
 def takeImg(namePost):
-    pass
-takeTegOfPost("firstNotes")
+    try:
+        conn = mysql.connector.connect(user='root', password='root',
+                                        host='localhost',
+                                        port=3308, # change to the port number used by MAMP
+                                        database='test')
+        
+
+        cursor = conn.cursor()
+    
+        cursor.execute("SELECT img FROM `blog` WHERE primaryKey = 4")
+        img = cursor.fetchall()    
+
+        img= ' '.join(map(str, img))
+        new_img = img[3:-2]
+       
+        return new_img
+        
+
+       
+    except mysql.connector.Error as e:
+        print("Error connecting to MySQL: ", e)
 
 # `
 

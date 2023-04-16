@@ -9,5 +9,6 @@ urlpatterns = [
     re_path("main/makePost", views.makePost),
     re_path('main/post',views.post),
     re_path('main', views.main),
+   
 ]
 

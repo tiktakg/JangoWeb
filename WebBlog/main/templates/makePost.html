@@ -1,37 +1,59 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>HTML Form</title>
     <meta charset="UTF-8">
 </head>
+
 <body>
-    <form>
+    <form method="post" action="http://127.0.0.1:8000/main/?name=root&password=root&tag=">
+        {% csrf_token %}
+        {% if post != ""%}
         <label for="title">Заголовок (25 символов):</label><br>
-        <input type="text" id="title\" name="title"value = {{post}} maxlength="25\"><br><br>
-        
+        <input type="text" id="title" name="title" value={{post}} maxlength="25"><br><br>
+
         <label for="text">Текст:</label><br>
-        <textarea id="text" name="text" rows="5"   cols="50">{{text}}</textarea><br><br>
-        
+        <textarea id="text" name="text" rows="5" cols="50">{{text}}</textarea><br><br>
+
         <label for="tag">Тег:</label><br>
-        <input type="text" id="tag" name="tag"  value = {{tegs}} placeholder="тег через ',' " > <br><br>
-        
-        <label  for="image">Картинка:</label><br>
-        <input class="enterFile" type="file" accept=".jpg,.png" >
-        
+        <input type="text" id="tag" name="tag" value={{tegs}} placeholder="тег через ',' "> <br><br>
+
+        <label for="image">Картинка:</label><br>
+        <input class="enterFile" type="file" accept=".jpg,.png">
+        {% else %}
+        <label for="title">Заголовок (25 символов):</label><br>
+        <input type="text" id="title\" name="title" value="" maxlength="25"><br><br>
+
+        <label for="text">Текст:</label><br>
+        <textarea id="text" name="text" rows="5" cols="50"></textarea><br><br>
+
+        <label for="tag">Тег:</label><br>
+        <input type="text" id="tag" name="tag" value="" placeholder="тег через ',' "> <br><br>
+
+        <label for="image">Картинка:</label><br>
+        <input class="enterFile" name="img" type="file" accept=".jpg,.png">
+        {% endif %}
+
         <button onclick="saveData()">Отправить</button>
+
+
+
 </body>
+
 </html>
 
 <script>
-    function saveData()
-    {
-        var title = document.getElementsByName('title')[0].value;
-        var text = document.getElementsByName('text')[0].value;
-        var tag = document.getElementsByName('tag')[0].value;
+    function saveData() {
+        var value = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('id='))
+            .split('=')[1];
 
-        document.cookie = "title="+title;
-        document.cookie = "text="+text;
-        document.cookie = "tag="+tag;
+       
+
+
+
 
     }
 </script>

@@ -36,32 +36,17 @@
             <form method="POST">
                 <ul>
                     {% for post,id in posts.items %}
-                        {% if tag == post%}
-                            {% if isAdmin %}
-                            <li>
-                                <p><a onclick="goToPost('{{id}}')" href="AdminPost/{{ post }}">{{post}}</a></p>
-                                <img src="https://via.placeholder.com/50x50" alt="Картинка">
-                            </li>
-                            {% else %}
-                            <li>
-                                <p><a onclick="goToPost('{{id}}')" href="post/{{ post }}">{{post}}</a></p>
-                                <img src="https://via.placeholder.com/50x50" alt="Картинка">
-                            </li>
-                            {% endif %}
-                        {% elif tag == ""%}
-                        {% if isAdmin %}
-                        <li>
-                            <p><a onclick="goToPost('{{id}}')" href="AdminPost/{{ post }}">{{post}}</a></p>
-                            <img src="https://via.placeholder.com/50x50" alt="Картинка">
-                        </li>
-                        {% else %}
-                        <li>
-                            <p><a onclick="goToPost('{{id}}')" href="post/{{ post }}">{{post}}</a></p>
-                            <img src="https://via.placeholder.com/50x50" alt="Картинка">
-                        </li>
-                        {% endif %}
+                    {% if isAdmin %}
+                    <li>
+                        <p><a onclick="goToPost('{{id}}')" href="AdminPost/?name={{ post }}">{{post}}</a></p>
+                        <img src="https://via.placeholder.com/50x50"alt="Картинка">
+                    </li>
+                    {% else %}
+                    <li>
+                        <p><a onclick="goToPost('{{id}}')" href="post/?name={{ post }}">{{post}}</a></p>
+                        <img src="https://via.placeholder.com/50x50" alt="Картинка">
+                    </li>
                     {% endif %}
-
                     {% endfor %}
                 </ul>
             </form>
@@ -77,11 +62,11 @@
 
         </div>
         {% endif %}
-        <ul>
-            {% for key, value in posts.items %}
-            <li>{{ key }}: {{ value }}</li>
-            {% endfor %}
-        </ul>
+       
+            <img id="my-image" src="https://via.placeholder.com/50x50" onclick="getUrl('123')" alt="test" />
+            
+           
+        
     </body>
 
 </html>
@@ -90,9 +75,31 @@
 
 <script>
 
-    function getUrl(str) {
-        var url = "post/?" + "post=" + encodeURIComponent(str)
-        return url;
+    function getUrl(img) 
+    {
+        console.log(img)
+
+        const myImage = document.getElementById('my-image');
+        myImage.src = URL.createObjectURL(img);
+
+         
+
+        
+        // const img = document.createElement('img');
+
+        // // Получаем URL-адрес Blob объекта
+      
+
+        // // Устанавливаем src атрибут img тега равным URL-адресу
+        img.src = imageUrl;
+
+        // // Добавляем тег img как дочерний элемент элемента myImageElement
+        myImageElement.appendChild(img);
+
+
+        // const img = document.createElement('img');
+        // document.body.appendChild(img);
+        // document.getElementById('my-image').appendChild(img);
     }
     function findWithTag(check) {
         var tag = document.getElementById('tagInput').value;
@@ -108,16 +115,19 @@
 
     function editNote(postName) {
 
-        var url = 'http://127.0.0.1:8000/main/makePost'
+        var url = 'http://127.0.0.1:8000/main/makePost/?name='
         window.location.href = url;
     }
     function goToPost(postName) {
 
-        console.log(postName)
-
         document.cookie = "id=" + postName;
     }
 
+   
+
 </script>
 
-<!-- ,'{{primaryKey}}' -->
+<script>
+
+
+</script>

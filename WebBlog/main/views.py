@@ -12,43 +12,56 @@ def main(request):
     tag = request.GET.get("tag")
     password = request.GET.get("password")
 
-    test = takeAllPost()
-    print(test)
+    titleFromMake =  request.POST.get("title",'')
+    textFromMake = request.POST.get("text",'')
+    tagFromMake = request.POST.get("tag",'')
+    imgFromMake = request.POST.get("img",'')
+    idFromMake = request.POST.get("iddd",'')
+
     
-    context = {'isAdmin': checkAdmin(name,password),'posts':  takeAllPost(),'tag':tag,'primaryKey':takeIdOfPost()}
+    if(titleFromMake != "" and textFromMake != ""):
+        addPost(titleFromMake,textFromMake,tagFromMake,imgFromMake)
+    # else:
+    #     print("eror")
+    #     return render(request, "eror.html")
+    
+    allpost ={}
+    if(tag == ""):
+        print("Tag empty")
+        allpost =  takeAllPost()
+    else:
+        allpost = takeTegOfPosts(tag)
+    
+   
+    
+    context = {'isAdmin': checkAdmin(name,password),'posts':  allpost,'primaryKey':takeIdOfPost(),'img':takeImg("firstNote")}
     return render(request, "main.html",context=context)
 
-def post(request):
-    # name = request.GET.get("post")
-    context = {'post': "firstNotes",'text':takeTextOfPost('firstNotes'),'tegs':takeTegOfPost('firstNotes')}
-    return render(request, "post.html",context=context)
+
 
 def AdminPost(request):
-    name = request.GET.get("id")
+    id = request.GET.get("id")
+    name = request.GET.get("name")
     if(id != ""):
-        deltePost(name)
-
-    
-    # session = requests.Session()
-    # print(session.cookies.get_dict())
-    # print("||")
+        deltePost(id)
 
 
-    # response = requests.get("http://localhost/main")
-    # cookies = response.cookies.get_dict()
-    # for cookie in session.cookies:
-    #     print(cookie)
-
-    
-
-   
-
-    context = {'post': "firstNotes",'text':takeTextOfPost('firstNotes'),'tegs':takeTegOfPost('firstNotes')}
+    context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name)}
     return render(request, "AdminPost.html",context=context)
  
 def makePost(request):
-    context = {'post': "firstNotes",'text':takeTextOfPost('firstNotes'),'tegs':takeTegOfPost('firstNotes')}
+    name = request.GET.get("name")
+    if(name!=""):
+        context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name)}
+    else:
+         context = {'post': "",'text': "",'tegs': ""}
+   
+
+
     return render(request, "makePost.html",context=context)
  
 
-
+def post(request):
+    name = request.GET.get("name")
+    context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name)}
+    return render(request, "post.html",context=context)

@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <button  onclick="exit()" >назад</button>
     <title>Пост</title>
     <style>
         .container {
@@ -47,6 +48,7 @@
 
         }
     </style>
+   
 </head>
 
 <body>
@@ -65,7 +67,7 @@
             <p>#{{tegs}}</p>
         </div>
 
-        <button  onclick="editNote()" class="btn-edit">Редактировать</button>
+        <button  onclick="editNote('{{post}}')" class="btn-edit">Редактировать</button>
         <button  onclick="deleteNotee()" class="btn-delete">Удалить</button>
         
 
@@ -79,25 +81,31 @@
 <script>
     function deleteNotee()
     {
-        // let post = "{{post}}"
-        // var url= "http://127.0.0.1:8000/main/"+ "AdminPost/" + "?name="+  encodeURIComponent(post)+ "&delete=" +  encodeURIComponent(true)
-        // window.location.href = url;
-
         var value = document.cookie
         .split('; ')
         .find(row => row.startsWith('id='))
         .split('=')[1];
 
-        console.log(value)
+        
 
         var url = 'http://127.0.0.1:8000/main/AdminPost/?id=' + encodeURIComponent(value)
         window.location.href = url;
     }
 
-    function editNote()
+    function editNote(name)
     {
-        var url = 'http://127.0.0.1:8000/main/makePost'
+        var value = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('id='))
+        .split('=')[1];
+
+        var url = 'http://127.0.0.1:8000/main/makePost/?name='+name + "&id=" +value;
         window.location.href = url;
+    }
+
+    function exit()
+    {
+        window.location.href =  'http://127.0.0.1:8000/main/?name=root&password=root&tag=';
     }
 
 </script>
