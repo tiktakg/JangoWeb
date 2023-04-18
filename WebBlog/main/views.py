@@ -20,6 +20,13 @@ def main(request):
 
     
 
+    from PIL import Image
+
+    image = Image.open(imgFromMake)
+    print(image.size) # выводит размеры картинки (ширина, высота)
+    print(image.format) # выводит формат картинки (JPEG, PNG и т.д.)
+    image.show()
+    
     
     if(idFromMake != "" and titleFromMake != "" and textFromMake != ""):
         updatePost(titleFromMake,textFromMake,tagFromMake,imgFromMake,idFromMake)

@@ -39,7 +39,11 @@
                     {% if isAdmin %}
                     <li>
                         <p><a onclick="goToPost('{{id}}')" href="AdminPost/?name={{ post }}">{{post}}</a></p>
-                      
+                        {% for idd,img in img.items %}
+                        {% if id == idd %}
+                        <img src="data:image/png;base64,{{ img }}" alt="Изображение">
+                        {% endif %}
+                        {% endfor %}
                     </li>
                     {% else %}
                     <li>

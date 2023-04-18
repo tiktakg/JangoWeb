@@ -163,9 +163,13 @@ def addPost(namePost,dataPost,tegPost,imgPost):
                                         database='test')
         
 
-        cursor = conn.cursor()
     
-        textForInset = f"INSERT INTO `blog` (`primaryKey`, `name`, `tegs`, `data`, `img`) VALUES (NULL, '{namePost}', '{tegPost}', '{dataPost}', NULL);"
+        cursor = conn.cursor()
+       
+        
+        # encoded_image = base64.b64encode(imgPost).decode("utf-8")
+        print(imgPost)
+        textForInset = f"INSERT INTO `blog` (`primaryKey`, `name`, `tegs`, `data`, `img`) VALUES (NULL, '{namePost}', '{tegPost}', '{dataPost}', Null);"
         cursor.execute(textForInset)
        
        
@@ -182,8 +186,10 @@ def updatePost(namePost,dataPost,tegPost,imgPost,id):
                                         database='test')
         
 
+        print(imgPost)
         cursor = conn.cursor()
         textForInset = f"UPDATE `blog` SET `name` = '{namePost}', `tegs` = '{tegPost}', `data` = '{dataPost}' WHERE `blog`.`primaryKey` = {id};"
+
 
         cursor.execute(textForInset)
         conn.commit()
@@ -234,40 +240,24 @@ def takeAllImg():
         
 
         cursor = conn.cursor()
-     
-
-
         cursor.execute(f"SELECT img,primaryKey FROM `blog`")
         allImg = cursor.fetchall()
 
 
-        # ''
-
-
-        image_base64_list = []
         newList = {}
         for result in allImg:
             if result[0] is not None:
                 image_base64 = base64.b64encode(result[0]).decode('utf-8')
-                image_base64_list.append(image_base64)
+                
      
                 newList[result[1]] = image_base64
          
-
-           
-
-
-            
-        
         return newList
-    
-        
-     
-       
+      
 
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
-# `
+
 
 
     
