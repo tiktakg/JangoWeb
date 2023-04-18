@@ -62,10 +62,13 @@
 
         </div>
         {% endif %}
-       
-            <img id="my-image" src="https://via.placeholder.com/50x50" onclick="getUrl('123')" alt="test" />
-            
+        <img src="data:image/png;base64,{{ img }}" />
+     
+    
            
+
+        
+   
         
     </body>
 
@@ -82,9 +85,7 @@
         const myImage = document.getElementById('my-image');
         myImage.src = URL.createObjectURL(img);
 
-         
 
-        
         // const img = document.createElement('img');
 
         // // Получаем URL-адрес Blob объекта

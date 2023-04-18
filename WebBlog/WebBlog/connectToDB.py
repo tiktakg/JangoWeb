@@ -1,4 +1,5 @@
 import mysql.connector
+import base64
 
  
 def checkAdmin(login, password):
@@ -202,12 +203,20 @@ def takeImg(namePost):
         cursor = conn.cursor()
     
         cursor.execute("SELECT img FROM `blog` WHERE primaryKey = 4")
-        img = cursor.fetchall()    
+        img = cursor.fetchone()[0]    
 
-        img= ' '.join(map(str, img))
-        new_img = img[3:-2]
+      
+        image_base64 = base64.b64encode(img).decode('utf-8')
+        print(image_base64)
+        return image_base64
+        # img= ' '.join(map(str, img))
+        # new_img = img[3:-2]
+        
        
-        return new_img
+        # print(base64_str)
+        
+       
+
         
 
        

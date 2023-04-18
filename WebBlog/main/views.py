@@ -1,7 +1,6 @@
 from django.shortcuts import HttpResponse,render
 from WebBlog.connectToDB import *
 
-import requests
 
 def authorization(request):
     return render(request, "authorization.html")
@@ -36,9 +35,10 @@ def main(request):
     else:
         allpost = takeTegOfPosts(tag)
     
+    print(takeImg("aasd"))
    
     
-    context = {'isAdmin': checkAdmin(name,password),'posts':  allpost,'primaryKey':takeIdOfPost(),'img':takeImg("firstNote")}
+    context = {'isAdmin': checkAdmin(name,password),'posts':  allpost,'primaryKey':takeIdOfPost(),'img':takeImg("aasd")}
     return render(request, "main.html",context=context)
 
 
