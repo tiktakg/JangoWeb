@@ -39,16 +39,26 @@
                     {% if isAdmin %}
                     <li>
                         <p><a onclick="goToPost('{{id}}')" href="AdminPost/?name={{ post }}">{{post}}</a></p>
-                        <img src="https://via.placeholder.com/50x50"alt="Картинка">
+                      
                     </li>
                     {% else %}
                     <li>
                         <p><a onclick="goToPost('{{id}}')" href="post/?name={{ post }}">{{post}}</a></p>
-                        <img src="https://via.placeholder.com/50x50" alt="Картинка">
+                       
+                        {% for idd,img in img.items %}
+                        {% if id == idd %}
+                        <img src="data:image/png;base64,{{ img }}" alt="Изображение">
+                        {% endif %}
+                        {% endfor %}
+                        
+                    
                     </li>
                     {% endif %}
                     {% endfor %}
+
                 </ul>
+
+                  
             </form>
 
         </div>
@@ -62,13 +72,7 @@
 
         </div>
         {% endif %}
-        <img src="data:image/png;base64,{{ img }}" />
-     
-    
-           
-
         
-   
         
     </body>
 
@@ -78,30 +82,7 @@
 
 <script>
 
-    function getUrl(img) 
-    {
-        console.log(img)
-
-        const myImage = document.getElementById('my-image');
-        myImage.src = URL.createObjectURL(img);
-
-
-        // const img = document.createElement('img');
-
-        // // Получаем URL-адрес Blob объекта
-      
-
-        // // Устанавливаем src атрибут img тега равным URL-адресу
-        img.src = imageUrl;
-
-        // // Добавляем тег img как дочерний элемент элемента myImageElement
-        myImageElement.appendChild(img);
-
-
-        // const img = document.createElement('img');
-        // document.body.appendChild(img);
-        // document.getElementById('my-image').appendChild(img);
-    }
+   
     function findWithTag(check) {
         var tag = document.getElementById('tagInput').value;
         if (check == true)

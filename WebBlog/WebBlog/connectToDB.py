@@ -37,7 +37,7 @@ def takeAllPost():
         newList = {}
         for name in name:
             newList[name[0]] = name[1]
-            newname =str(name[0]) + ":"+ str(name[1])
+          
  
         
 
@@ -59,6 +59,7 @@ def takeIdOfPost():
        
         primaryKey= ' '.join(map(str, primaryKey))
 
+      
        
         for ch in ['(',')','\'',',']:
             primaryKey = primaryKey.replace(ch,'')
@@ -120,7 +121,7 @@ def takeTegOfPosts(teg):
         
         
       
-
+        
         newList = {}
         for name in name:
             allTegs = name[2].split(',')
@@ -223,6 +224,49 @@ def takeImg(namePost):
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
 
+
+def takeAllImg():
+    try:
+        conn = mysql.connector.connect(user='root', password='root',
+                                        host='localhost',
+                                        port=3308, # change to the port number used by MAMP
+                                        database='test')
+        
+
+        cursor = conn.cursor()
+     
+
+
+        cursor.execute(f"SELECT img,primaryKey FROM `blog`")
+        allImg = cursor.fetchall()
+
+
+        # ''
+
+
+        image_base64_list = []
+        newList = {}
+        for result in allImg:
+            if result[0] is not None:
+                image_base64 = base64.b64encode(result[0]).decode('utf-8')
+                image_base64_list.append(image_base64)
+     
+                newList[result[1]] = image_base64
+         
+
+           
+
+
+            
+        
+        return newList
+    
+        
+     
+       
+
+    except mysql.connector.Error as e:
+        print("Error connecting to MySQL: ", e)
 # `
 
 

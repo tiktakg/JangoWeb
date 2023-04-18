@@ -20,7 +20,7 @@ def main(request):
 
     
 
-    print(idFromMake)
+    
     if(idFromMake != "" and titleFromMake != "" and textFromMake != ""):
         updatePost(titleFromMake,textFromMake,tagFromMake,imgFromMake,idFromMake)
     elif(titleFromMake != "" and textFromMake != ""):
@@ -38,7 +38,7 @@ def main(request):
   
    
     
-    context = {'isAdmin': checkAdmin(name,password),'posts':  allpost,'primaryKey':takeIdOfPost(),'img':takeImg("3")}
+    context = {'isAdmin': checkAdmin(name,password),'posts':  allpost,'primaryKey':takeIdOfPost(),'img':takeAllImg()}
     return render(request, "main.html",context=context)
 
 
