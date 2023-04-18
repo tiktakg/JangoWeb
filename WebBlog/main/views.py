@@ -35,22 +35,21 @@ def main(request):
     else:
         allpost = takeTegOfPosts(tag)
     
-    print(takeImg("aasd"))
+  
    
     
-    context = {'isAdmin': checkAdmin(name,password),'posts':  allpost,'primaryKey':takeIdOfPost(),'img':takeImg("aasd")}
+    context = {'isAdmin': checkAdmin(name,password),'posts':  allpost,'primaryKey':takeIdOfPost(),'img':takeImg("3")}
     return render(request, "main.html",context=context)
 
 
 
 def AdminPost(request):
-    id = request.GET.get("id")
     name = request.GET.get("name")
     if(id != ""):
         deltePost(id)
 
 
-    context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name)}
+    context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'img':takeImg(name)}
     return render(request, "AdminPost.html",context=context)
  
 def makePost(request):
@@ -60,7 +59,7 @@ def makePost(request):
    
     
     if(name!=""):
-        context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'id':id}
+        context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'id':id,}
     else:
          context = {'post': "",'text': "",'tegs': ""}
    
@@ -71,5 +70,5 @@ def makePost(request):
 
 def post(request):
     name = request.GET.get("name")
-    context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name)}
+    context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'img':takeImg(name)}
     return render(request, "post.html",context=context)

@@ -201,25 +201,25 @@ def takeImg(namePost):
         
 
         cursor = conn.cursor()
-    
-        cursor.execute("SELECT img FROM `blog` WHERE primaryKey = 4")
+        cursor.execute(f"SELECT name,primaryKey FROM `blog`")
+        allName = cursor.fetchall()
+
+        id = ""
+        for Name in allName:
+            if(Name[0] == namePost):
+                id = Name[1] 
+           
+
+
+        cursor.execute(f"SELECT img FROM `blog` WHERE primaryKey = {id}")
         img = cursor.fetchone()[0]    
 
-      
+
         image_base64 = base64.b64encode(img).decode('utf-8')
-        print(image_base64)
+        
         return image_base64
-        # img= ' '.join(map(str, img))
-        # new_img = img[3:-2]
-        
-       
-        # print(base64_str)
-        
        
 
-        
-
-       
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
 
