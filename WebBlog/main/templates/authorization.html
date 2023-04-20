@@ -29,8 +29,10 @@
       var newPasswod = password.replace(/ /g, "");
       var newName = name.replace(/ /g, "");
      
+      document.cookie = "go=" + "Yes";
       if (newPasswod != "" && newName != "") {
         var url = "main/?" + "name=" + encodeURIComponent(newName) + "&password=" + encodeURIComponent(newPasswod) + "&tag=";
+        
         window.location.href = url;
       }
    

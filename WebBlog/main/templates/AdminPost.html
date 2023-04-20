@@ -61,7 +61,7 @@
             {{text}}
         </div>
         <div class="image">
-            <img src="data:image/png;base64,{{ img }}">
+            <img src="CloseEye.png" alt=" net">
         </div>
         <div class="short-tag">
             <p>#{{tegs}}</p>
@@ -103,6 +103,7 @@
 
     function exit()
     {
+        document.cookie = "go=" + "";
         window.location.href =  'http://127.0.0.1:8000/main/?name=root&password=root&tag=';
     }
 

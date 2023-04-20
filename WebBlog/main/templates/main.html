@@ -6,18 +6,22 @@
 </head>
 <div>
     <div style="text-align: center;">
-        {% if isAdmin %}
-        <h2>Welcome back, admin !</h2>
 
-        {% else %}
+        {% if isAdmin == -1  %}
+        <h2>Не авторазован !</h2>
+        {% elif isAdmin == 1  %}
+        <h2>Welcome back, admin!</h2>
+
+        {% elif isAdmin == 0  %}
         <h2>Welcome back, user !</h2>
         {% endif %}
     </div>
 
     <body>
+        {% if isAdmin != -1 %}
         <div style="text-align: right;">
 
-            {% if isAdmin %}
+            {% if isAdmin == 1 %}
             <input type="text" id="tagInput" placeholder="Поиск">
             <button onclick="findWithTag(true)">искать</button>
             {% else %}
@@ -31,27 +35,28 @@
 
         <div style=" overflow: auto; height: 600px; scrollbar-width: thin;">
             <p>
+           
             <H3>Все посты</H3>
             </p>
             <form method="POST">
                 <ul>
                     {% for post,id in posts.items %}
-                    {% if isAdmin %}
+                    {% if isAdmin == 1 %}
                     <li>
                         <p><a onclick="goToPost('{{id}}')" href="AdminPost/?name={{ post }}">{{post}}</a></p>
                         {% for idd,img in img.items %}
                         {% if id == idd %}
-                        <img src="data:image/png;base64,{{ img }}" alt="Изображение">
+                        <!-- <img src="data:image/png;base64,{{ img }}" alt="Изображение"> -->
                         {% endif %}
                         {% endfor %}
                     </li>
-                    {% else %}
+                    {% else%}
                     <li>
                         <p><a onclick="goToPost('{{id}}')" href="post/?name={{ post }}">{{post}}</a></p>
                        
                         {% for idd,img in img.items %}
                         {% if id == idd %}
-                        <img src="data:image/png;base64,{{ img }}" alt="Изображение">
+                        <!-- <img src="data:image/png;base64,{{ img }}" alt="Изображение"> -->
                         {% endif %}
                         {% endfor %}
                         
@@ -70,15 +75,16 @@
         {% if isAdmin %}
         <div>
             <p>
-                <button onclick="editNote()">добавить запись</button>
-            <p><a href="http://127.0.0.1:8000/">выйти</a></p>
+                <button onclick="editNote('{{nameOfAdmin}}')">добавить запись</button>
+            <p><button onclick="exit()">Выйти</button></p>
             </p>
 
         </div>
         {% endif %}
         
-        
+        {% endif %}
     </body>
+
 
 </html>
 
@@ -101,12 +107,20 @@
 
     function editNote(postName) {
 
+       
         var url = 'http://127.0.0.1:8000/main/makePost/?name='
         window.location.href = url;
     }
     function goToPost(postName) {
 
         document.cookie = "id=" + postName;
+    }
+    
+    function exit()
+    {
+        document.cookie = "id=" + "";
+        var url = 'http://127.0.0.1:8000/'
+        window.location.href = url;
     }
 
 </script>

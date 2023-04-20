@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <form method="post" action="http://127.0.0.1:8000/main/?name=root&password=root&tag=&id={{id}}">
+    <form method="post" action="http://127.0.0.1:8000/main/?name=root&password=root&tag=&id={{id}}" enctype="multipart/form-data">
         {% csrf_token %}
         {% if post != ""%}
         <label for="title">Заголовок (25 символов):</label><br>
@@ -20,7 +20,7 @@
         <input type="text" id="tag" name="tag" value={{tegs}} placeholder="тег через ',' "> <br><br>
 
         <label for="image">Картинка:</label><br>
-        <input class="enterFile" type="file" accept=".jpg,.png" required>
+        <input class="enterFile" type="file" name="img" accept=".jpg,.png" required>
         {% else %}
         <label for="title">Заголовок (25 символов):</label><br>
         <input type="text" id="title" name="title" value="" maxlength="25" required><br><br>
@@ -36,11 +36,5 @@
         {% endif %}
         <input type="submit" value="Отправить" />
     </form>
-      
-       
-
-
-
 </body>
-
 </html>
