@@ -86,6 +86,7 @@ def takeTextOfPost(namePost):
             if(txt[0]==namePost):
                 return txt[1]
 
+        return ""
  
 
     except mysql.connector.Error as e:
@@ -102,8 +103,11 @@ def takeTegToPost(teg):
         name = cursor.fetchall()
         
         my_dict = dict(name)
-
-        return my_dict.get(teg)
+        tegs = my_dict.get(teg)
+        if(tegs is None):
+            return ""
+        
+        return tegs
     
 
     except mysql.connector.Error as e:
@@ -168,7 +172,7 @@ def addPost(namePost,dataPost,tegPost,imgPost):
        
         
         # encoded_image = base64.b64encode(imgPost).decode("utf-8")
-        print(imgPost)
+    
         textForInset = f"INSERT INTO `blog` (`primaryKey`, `name`, `tegs`, `data`, `img`) VALUES (NULL, '{namePost}', '{tegPost}', '{dataPost}', Null);"
         cursor.execute(textForInset)
        
@@ -222,9 +226,9 @@ def takeImg(namePost):
         img = cursor.fetchone()[0]    
 
 
-        image_base64 = base64.b64encode(img).decode('utf-8')
+        # image_base64 = base64.b64encode(img).decode('utf-8')
         
-        return image_base64
+        # return image_base64
        
 
     except mysql.connector.Error as e:
@@ -257,7 +261,19 @@ def takeAllImg():
 
     except mysql.connector.Error as e:
         print("Error connecting to MySQL: ", e)
+    
+def checkData(title,data,teg):
+    check = False
+    for symbol in title:
+        if(not symbol.isalpha() and not symbol.isdigit()):
+            check = True
+    
+    return check
 
+def clearTegs(tegs):
+    import re
+    newtegs = tegs.replace(" ",'')
 
-
+ 
+    return re.sub(',+',",",newtegs)
     

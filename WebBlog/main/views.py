@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponse,render
 from WebBlog.connectToDB import *
-
+from PIL import Image
 
 def authorization(request):
     return render(request, "authorization.html")
@@ -13,29 +13,26 @@ def main(request):
 
     idFromMake = request.GET.get("id",'')
 
+
     titleFromMake =  request.POST.get("title",'')
     textFromMake = request.POST.get("text",'')
     tagFromMake = request.POST.get("tag",'')
     imgFromMake = request.POST.get("img",'')
 
     
-
-    from PIL import Image
-
-    image = Image.open(imgFromMake)
-    print(image.size) # выводит размеры картинки (ширина, высота)
-    print(image.format) # выводит формат картинки (JPEG, PNG и т.д.)
-    image.show()
     
-    
+    if(checkData(titleFromMake,textFromMake,tagFromMake)):
+        context = {'post': titleFromMake,'text':textFromMake,'tegs':tagFromMake,'id':id,}
+        return render(request, "makePost.html",context)
+
     if(idFromMake != "" and titleFromMake != "" and textFromMake != ""):
-        updatePost(titleFromMake,textFromMake,tagFromMake,imgFromMake,idFromMake)
+        updatePost(titleFromMake,textFromMake,clearTegs(tagFromMake),imgFromMake,idFromMake)
     elif(titleFromMake != "" and textFromMake != ""):
-        addPost(titleFromMake,textFromMake,tagFromMake,imgFromMake)
+        addPost(titleFromMake,textFromMake,clearTegs(tagFromMake),imgFromMake)
    
     
    
-    
+    print(tag)
     allpost ={}
     if(tag == ""):
         allpost =  takeAllPost()
@@ -52,6 +49,7 @@ def main(request):
 
 def AdminPost(request):
     name = request.GET.get("name")
+    id = request.GET.get("id")
     if(id != ""):
         deltePost(id)
 

@@ -11,31 +11,33 @@
         {% csrf_token %}
         {% if post != ""%}
         <label for="title">Заголовок (25 символов):</label><br>
-        <input type="text" id="title" name="title" value={{post}} maxlength="25"><br><br>
+        <input required type="text" id="title" name="title" value={{post}} maxlength="25" required ><br><br>
 
         <label for="text">Текст:</label><br>
-        <textarea id="text" name="text" rows="5" cols="50">{{text}}</textarea><br><br>
+        <textarea id="text" name="text" rows="5" cols="50" required>{{text}}</textarea><br><br>
 
         <label for="tag">Тег:</label><br>
         <input type="text" id="tag" name="tag" value={{tegs}} placeholder="тег через ',' "> <br><br>
 
         <label for="image">Картинка:</label><br>
-        <input class="enterFile" type="file" accept=".jpg,.png">
+        <input class="enterFile" type="file" accept=".jpg,.png" required>
         {% else %}
         <label for="title">Заголовок (25 символов):</label><br>
-        <input type="text" id="title\" name="title" value="" maxlength="25"><br><br>
+        <input type="text" id="title" name="title" value="" maxlength="25" required><br><br>
 
         <label for="text">Текст:</label><br>
-        <textarea id="text" name="text" rows="5" cols="50"></textarea><br><br>
+        <textarea id="text" name="text" rows="5" cols="50" required></textarea><br><br>
 
         <label for="tag">Тег:</label><br>
         <input type="text" id="tag" name="tag" value="" placeholder=" тег через ',' "> <br><br>
 
         <label for="image">Картинка:</label><br>
-        <input class="enterFile" name="img" type="file" accept=".jpg,.png">
+        <input class="enterFile" name="img" type="file" accept=".jpg,.png" required>
         {% endif %}
-
-        <button >Отправить</button>
+        <input type="submit" value="Отправить" />
+    </form>
+      
+       
 
 
 

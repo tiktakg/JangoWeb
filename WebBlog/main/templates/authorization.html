@@ -9,21 +9,33 @@
   <div style="text-align: center;">
     <h1>Добро пожаловать!</h1>
     <p>Введите ваше имя:</p>
-    <input type="text" id="nameInput" method="get">
-    <br>
-    <p>Введите ваш пароль:</p>
-    <input type="password" id="passwordInput">
-    <br>
-    <button onclick="submitForm()">Отправить</button>
+    
+      <p><input type="text" id="nameInput" method="get"></p>
+      <p>Введите ваш пароль:</p>
+      <p><input type="password" id="passwordInput"></p>
+      <button type="submit" onclick="submitForm()">Отправить</button>
+    
   </div>
+
+
+
   <script>
 
-    function submitForm() 
-    {
+
+    function submitForm() {
       var name = document.getElementById('nameInput').value;
       var password = document.getElementById('passwordInput').value;
-      var url = "main/?"+"name="+ encodeURIComponent(name) + "&password=" + encodeURIComponent(password)+ "&tag=";
-      window.location.href = url;
+
+      var newPasswod = password.replace(/ /g, "");
+      var newName = name.replace(/ /g, "");
+     
+      if (newPasswod != "" && newName != "") {
+        var url = "main/?" + "name=" + encodeURIComponent(newName) + "&password=" + encodeURIComponent(newPasswod) + "&tag=";
+        window.location.href = url;
+      }
+   
+
+
     }
 
   </script>
