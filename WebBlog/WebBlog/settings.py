@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,6 +27,10 @@ SECRET_KEY = 'django-insecure-$dk0t71=!62bar38l55i%3b3(is)$#lex_8+lly8498dx!smv0
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+import os
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
 
 
 # Application definition
@@ -116,9 +121,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+STATICFILES_DIRS =[
+    os.path.join(BASE_DIR,'mian/static')
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

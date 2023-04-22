@@ -1,5 +1,5 @@
 import mysql.connector
-import base64
+
 
 
 def checkAdmin(login, password):
@@ -23,6 +23,7 @@ def checkAdmin(login, password):
             if (checkData[1] == login and checkData[2] == password):
                 idUser = str(checkData[0])
                 name =  str(checkData[3])
+                
 
         for data in dataAboutAdmin:
             if (str(data[0]) == str(idUser)):
@@ -221,17 +222,15 @@ def takeImg(namePost):
             if (Name[0] == namePost):
                 id = Name[1]
 
-        print(id)
+       
         cursor.execute(
             f"SELECT nameImage FROM `blog` WHERE primaryKey = {id};")
         img = cursor.fetchone()[0]
 
-        print(img)
-        allPath = "main/post_images/" + str(img)
-        return allPath
+        return img
 
     except mysql.connector.Error as e:
-        print("Error connecting to MySQLT: ", e)
+        print("Error connecting to MySQLTT: ", e)
 
 
 def takeAllImg():
