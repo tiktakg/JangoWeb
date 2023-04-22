@@ -77,7 +77,7 @@
         </div>
         <div class="image">
             {%load static %}
-            <img src="{{img}}" alt="Изображеqние">
+            <img src="{% static 'post_images/'|add:img %}" alt="Изображеqние">
         </div>
         <div class="short-tag">
             <p>#{{tegs}}</p>

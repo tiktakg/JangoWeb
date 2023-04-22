@@ -175,7 +175,7 @@ def addPost(namePost, dataPost, tegPost, imgPost,nameAdmin):
         cursor = conn.cursor()
 
 
-        with open('main/post_images/' + imgPost.name, 'wb+') as destination:
+        with open('main/static/post_images/' + imgPost.name, 'wb+') as destination:
             for chunk in imgPost.chunks():
                 destination.write(chunk)
 
@@ -245,6 +245,8 @@ def takeAllImg():
         allImg = cursor.fetchall()
 
         newList = {}
+        for result in allImg:
+            newList[result[1]] = result[0]
         
 
         return newList

@@ -61,7 +61,8 @@
                         <p><a onclick="goToPost('{{id}}')" href="AdminPost/?name={{ post }}">{{post}}</a></p>
                         {% for idd,img in img.items %}
                         {% if id == idd %}
-                        <!-- <img src="data:image/png;base64,{{ img }}" alt="Изображение"> -->
+                            {%load static %}
+                            <img src="{% static 'post_images/'|add:img %}" alt="Изображеqние">
                         {% endif %}
                         {% endfor %}
                     </li>
@@ -71,7 +72,8 @@
                        
                         {% for idd,img in img.items %}
                         {% if id == idd %}
-                        <!-- <img src="data:image/png;base64,{{ img }}" alt="Изображение"> -->
+                        {%load static %}
+                        <img src="{% static 'post_images/'|add:img %}" alt="Изображеqние">
                         {% endif %}
                         {% endfor %}
                         
@@ -100,7 +102,7 @@
         
         {% endif %}
         {%load static %}
-        <img src="{% static 'post_images/CloseEye.png' %}" alt="Изображеqние">
+      
     </body>
 
 

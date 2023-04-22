@@ -28,26 +28,23 @@ def main(request):
         adminName = request.COOKIES.get("nameAdmin")
 
 
+    if(checkData(titleFromMake,textFromMake,tagFromMake)):
+        context = {'post': titleFromMake,'text':textFromMake,'tegs':tagFromMake,'id':id,}
+        return render(request, "makePost.html",context)
+    
     if 'img' in request.FILES:
          imgFromMake = request.FILES['img']  
          if(idFromMake != "" and titleFromMake != "" and textFromMake != "" ):
-            print("Update")
             updatePost(titleFromMake,textFromMake,clearTegs(tagFromMake),imgFromMake,idFromMake,adminName)
          elif(titleFromMake != "" and textFromMake != ""):
-            print("Make")
             addPost(titleFromMake,textFromMake,clearTegs(tagFromMake),imgFromMake,adminName)
    
   
     
     
-    if(checkData(titleFromMake,textFromMake,tagFromMake)):
-        context = {'post': titleFromMake,'text':textFromMake,'tegs':tagFromMake,'id':id,}
-        return render(request, "makePost.html",context)
+   
     
     
-
-
-
    
     allpost ={}
     if(tag == ""):
@@ -75,16 +72,14 @@ def main(request):
 def AdminPost(request):
     name = request.GET.get("name")
     id = request.GET.get("id")
+
     if(id != ""):
         deltePost(id)
 
-    sdf = str(takeImg(name))
+
     
-    d = "{% static"
-    f = "%}"
-    img = f"{d} 'post_images/CloseEye.png' {f}"
-    print(img)
-    context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'img':img}
+    
+    context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'img':takeImg(name)}
     return render(request, "AdminPost.html",context=context)
  
 def makePost(request):
