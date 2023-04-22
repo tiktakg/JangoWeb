@@ -4,6 +4,21 @@
 <head>
     <button  onclick="exit()" >назад</button>
     <title>Пост</title>
+    <script>
+        var checkAaut = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("go="))
+        ?.split("=")[1];
+
+        if(checkAaut == "!")
+        {
+            var url = 'http://127.0.0.1:8000/'
+            window.location.href = url;
+        }
+
+        console.log("asdasd")
+    </script>
+    
     <style>
         .container {
             display: flex;
@@ -103,8 +118,8 @@
 
     function exit()
     {
-        document.cookie = "go=" + "";
         window.location.href =  'http://127.0.0.1:8000/main/?name=root&password=root&tag=';
+        
     }
 
 </script>

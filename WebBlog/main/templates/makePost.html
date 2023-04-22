@@ -4,6 +4,21 @@
 <head>
     <title>HTML Form</title>
     <meta charset="UTF-8">
+
+    <script>
+        var checkAaut = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("go="))
+        ?.split("=")[1];
+
+        if(checkAaut == "!")
+        {
+            var url = 'http://127.0.0.1:8000/'
+            window.location.href = url;
+        }
+
+        console.log("asdasd")
+    </script>
 </head>
 
 <body>

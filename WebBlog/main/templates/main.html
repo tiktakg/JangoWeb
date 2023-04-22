@@ -3,12 +3,27 @@
 
 <head>
     <title>Мой сайт</title>
+
+    <script>
+        var checkAaut = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("go="))
+        ?.split("=")[1];
+
+        if(checkAaut == "!")
+        {
+            var url = 'http://127.0.0.1:8000/'
+            window.location.href = url;
+        }
+
+        console.log("asdasd")
+    </script>
 </head>
 <div>
     <div style="text-align: center;">
 
         {% if isAdmin == -1  %}
-        <h2>Не авторазован !</h2>
+        <h2>Не авторизован !</h2>
         {% elif isAdmin == 1  %}
         <h2>Welcome back, admin!</h2>
 
@@ -118,9 +133,9 @@
     
     function exit()
     {
-        document.cookie = "id=" + "";
         var url = 'http://127.0.0.1:8000/'
         window.location.href = url;
+        document.cookie = "go=!;path=/";
     }
 
 </script>
