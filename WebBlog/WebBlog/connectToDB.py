@@ -195,9 +195,9 @@ def updatePost(namePost, dataPost, tegPost, imgPost, id,nameAdmin):
                                        port=3308,  # change to the port number used by MAMP
                                        database='test')
 
-        print(imgPost)
+        
         cursor = conn.cursor()
-        textForInset = f"UPDATE `blog` SET `name` = '{namePost}', `tegs` = '{tegPost}', `data` = '{dataPost}', `nameImage` ='{imgPost}', `nameAdmin`=  `{nameAdmin}` WHERE `blog`.`primaryKey` = {id};"
+        textForInset = f"UPDATE `blog` SET `name` = '{namePost}', `tegs` = '{tegPost}', `data` = '{dataPost}', `nameImage` = '{imgPost}', `nameAdmin`=  '{nameAdmin}' WHERE `blog`.`primaryKey` = {id};"
 
         cursor.execute(textForInset)
         conn.commit()
@@ -255,11 +255,14 @@ def takeAllImg():
         print("Error connecting to MySQL: ", e)
 
 
-def checkData(title, data, teg):
-    check = False
+def checkData(title, data, teg,imgPost):
+    check = -1
     for symbol in title:
         if (not symbol.isalpha() and not symbol.isdigit()):
-            check = True
+            check = 0
+    
+    if imgPost.size >= 2094580:
+         check = 1
 
     return check
 

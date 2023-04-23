@@ -24,6 +24,7 @@
 
         {% if isAdmin == -1  %}
         <h2>Не авторизован !</h2>
+        <button onclick="exit()">авторизоваться</button>
         {% elif isAdmin == 1  %}
         <h2>Welcome back, admin!</h2>
 
@@ -62,7 +63,7 @@
                         {% for idd,img in img.items %}
                         {% if id == idd %}
                             {%load static %}
-                            <img src="{% static 'post_images/'|add:img %}" alt="Изображеqние">
+                            <img src="{% static 'post_images/'|add:img %}" width="200" height="200" alt="Изображеqние">
                         {% endif %}
                         {% endfor %}
                     </li>
@@ -73,7 +74,7 @@
                         {% for idd,img in img.items %}
                         {% if id == idd %}
                         {%load static %}
-                        <img src="{% static 'post_images/'|add:img %}" alt="Изображеqние">
+                        <img src="{% static 'post_images/'|add:img %}" width="200" height="200" alt="Изображеqние">
                         {% endif %}
                         {% endfor %}
                         
@@ -141,6 +142,7 @@
         var url = 'http://127.0.0.1:8000/'
         window.location.href = url;
         document.cookie = "go=!;path=/";
+        document.cookie = "nameAdmin=!;path=/"
     }
 
 </script>

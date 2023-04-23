@@ -28,12 +28,15 @@ def main(request):
         adminName = request.COOKIES.get("nameAdmin")
 
 
-    if(checkData(titleFromMake,textFromMake,tagFromMake)):
-        context = {'post': titleFromMake,'text':textFromMake,'tegs':tagFromMake,'id':id,}
-        return render(request, "makePost.html",context)
+   
     
     if 'img' in request.FILES:
-         imgFromMake = request.FILES['img']  
+         imgFromMake = request.FILES['img'] 
+         check = checkData(titleFromMake,textFromMake,tagFromMake,imgFromMake)
+         if(check != -1):
+            context = {'post': titleFromMake,'text':textFromMake,'tegs':tagFromMake,'id':id,'error':check}
+            return render(request, "makePost.html",context)
+         
          if(idFromMake != "" and titleFromMake != "" and textFromMake != "" ):
             updatePost(titleFromMake,textFromMake,clearTegs(tagFromMake),imgFromMake,idFromMake,adminName)
          elif(titleFromMake != "" and textFromMake != ""):
@@ -61,7 +64,9 @@ def main(request):
        
     if "nameAdmin" in request.COOKIES:
         adminName = request.COOKIES.get("nameAdmin")
-        print(adminName)
+        if(adminName == "!"):
+            response.set_cookie("nameAdmin",checkAdmin(name,password)[1])
+            adminName = checkAdmin(name,password)[1]
     else:
         response.set_cookie("nameAdmin",checkAdmin(name,password)[1] )
 
@@ -75,6 +80,7 @@ def AdminPost(request):
 
     if(id != ""):
         deltePost(id)
+    
 
 
     
@@ -90,7 +96,7 @@ def makePost(request):
     
   
     if(name!=""):
-        context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'id':id,}
+        context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'id':id,'img':takeImg(name),'error':""}
     else:
          context = {'post': "",'text': "",'tegs': ""}
    
