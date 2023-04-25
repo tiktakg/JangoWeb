@@ -10,27 +10,28 @@ def checkAdmin(login, password):
                                        database='test')
         cursor = conn.cursor()
 
-        cursor.execute("SELECT primaryKey,login,password,firstName FROM `loginData`")
+        cursor.execute("SELECT primaryKey,login,password,id_checkAdmin  FROM `loginData`")
         dataAboutAll = cursor.fetchall()
 
-        cursor.execute("SELECT nameAdmin,isAdmin FROM `checkadmin`")
+        cursor.execute("SELECT id_roles,name_Roles FROM `roles`")
         dataAboutAdmin = cursor.fetchall()
 
         idUser = ""
         name =  ""
         for checkData in dataAboutAll:
-
             if (checkData[1] == login and checkData[2] == password):
-                idUser = str(checkData[0])
-                name =  str(checkData[3])
+                idUser = str(checkData[3])
+                name =  str(checkData[0])
                 
+        
 
         for data in dataAboutAdmin:
             if (str(data[0]) == str(idUser)):
-                if (str(data[1]) == "1"):
+                if (str(data[0]) == "1"):
                     return 1,name
-                elif (str(data[1]) == "0"):
+                elif (str(data[0]) == "0"):
                     return 0,name
+
 
         return -1,name
 

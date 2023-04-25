@@ -119,7 +119,7 @@
         if (check == true)
             var url = "?name=" + encodeURIComponent("root") + "&password=" + encodeURIComponent("root") + "&tag=" + encodeURIComponent(tag);
         else
-            var url = "?tag=" + encodeURIComponent(tag);
+            var url = "?name=" + encodeURIComponent("user") + "&password=" + encodeURIComponent("user") + "&tag=" + encodeURIComponent(tag);
 
 
         window.location.href = url;
