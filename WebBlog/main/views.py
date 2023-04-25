@@ -1,54 +1,45 @@
-from django.shortcuts import HttpResponse,render,redirect
+from django.shortcuts import HttpResponse,render
 from WebBlog.connectToDB import *
-import requests
-from django.conf import settings
+from django.core.files.base import ContentFile
 
 def authorization(request):
     return render(request, "authorization.html")
  
 def main(request):
     
-    
-    
     name = request.GET.get("name",'')
     tag = request.GET.get("tag",'')
     password = request.GET.get("password")
+
     idFromMake = request.GET.get("id",'')
 
     titleFromMake =  request.POST.get("title",'')
     textFromMake = request.POST.get("text",'')
     tagFromMake = request.POST.get("tag",'')
 
-   
-   
-  
     
+    from PIL import Image
+    from io import BytesIO
+    import os
 
-    if "nameAdmin" in request.COOKIES:
-        adminName = request.COOKIES.get("nameAdmin")
+    buffer = BytesIO()
+    if 'img' in request.FILES and request.FILES['img']:
+        file = request.FILES['img']
+        print(file)
+       
+        
+
+       
 
 
+    if(idFromMake != "" and titleFromMake != "" and textFromMake != ""):
+        updatePost(titleFromMake,textFromMake,tagFromMake,buffer,idFromMake)
+    elif(titleFromMake != "" and textFromMake != ""):
+        addPost(titleFromMake,textFromMake,tagFromMake,buffer)
    
-    
-    if 'img' in request.FILES:
-         imgFromMake = request.FILES['img'] 
-         check = checkData(titleFromMake,textFromMake,tagFromMake,imgFromMake)
-         if(check != -1):
-            context = {'post': titleFromMake,'text':textFromMake,'tegs':tagFromMake,'id':id,'error':check}
-            return render(request, "makePost.html",context)
-         
-         if(idFromMake != "" and titleFromMake != "" and textFromMake != "" ):
-            updatePost(titleFromMake,textFromMake,clearTegs(tagFromMake),imgFromMake,idFromMake,adminName)
-         elif(titleFromMake != "" and textFromMake != ""):
-            addPost(titleFromMake,textFromMake,clearTegs(tagFromMake),imgFromMake,adminName)
-   
-  
-    
     
    
     
-    
-   
     allpost ={}
     if(tag == ""):
         allpost =  takeAllPost()
@@ -58,45 +49,28 @@ def main(request):
   
    
     
-    context = {'isAdmin': checkAdmin(name,password)[0],'posts':  allpost,'primaryKey':takeIdOfPost(),'img':takeAllImg()}
-    response = render(request, "main.html",context=context)
-
-       
-    if "nameAdmin" in request.COOKIES:
-        adminName = request.COOKIES.get("nameAdmin")
-        if(adminName == "!"):
-            response.set_cookie("nameAdmin",checkAdmin(name,password)[1])
-            adminName = checkAdmin(name,password)[1]
-    else:
-        response.set_cookie("nameAdmin",checkAdmin(name,password)[1] )
-
-    return response
+    context = {'isAdmin': 0,'posts':  allpost,'primaryKey':takeIdOfPost(),'img':takeAllImg()}
+    return render(request, "main.html",context=context)
 
 
 
 def AdminPost(request):
     name = request.GET.get("name")
     id = request.GET.get("id")
-
     if(id != ""):
         deltePost(id)
-    
 
 
-    
-    
     context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'img':takeImg(name)}
     return render(request, "AdminPost.html",context=context)
  
 def makePost(request):
     name = request.GET.get("name")
     id = request.GET.get("id")
-
     
     
-  
     if(name!=""):
-        context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'id':id,'img':takeImg(name),'error':""}
+        context = {'post': name,'text':takeTextOfPost(name),'tegs':takeTegToPost(name),'id':id,}
     else:
          context = {'post': "",'text': "",'tegs': ""}
    
